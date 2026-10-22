@@ -1,0 +1,147 @@
+{
+  "period": [
+    "2024-06-14",
+    "2026-10-22"
+  ],
+  "last_12_months": [
+    "2025-10-23",
+    "2026-10-22"
+  ],
+  "activation_ratio_mean": {
+    "up": 0.1133,
+    "down": 0.119
+  },
+  "saturation_window": [
+    "2025-10-23",
+    "2026-10-22"
+  ],
+  "generated_utc": "2026-10-22 08:56",
+  "data_downloaded": "22 October 2026",
+  "days": 861,
+  "status": {
+    "rce": "last interval 2026-10-22 21:45 UTC",
+    "sdac": "last interval 2026-10-22 21:45 UTC",
+    "cap_price": "last interval 2026-10-23 21:00 UTC",
+    "cap_volume": "last interval 2026-10-23 21:00 UTC",
+    "sup_price": "last interval 2026-10-22 07:15 UTC",
+    "sup_volume": "last interval 2026-10-22 07:15 UTC",
+    "afrr_energy": "last interval 2026-10-20 21:45 UTC, missing 2024-06,2024-07,2024-08,2024-09,2024-10,2024-11,2024-12,2025-01,2025-02,2025-03,2025-04,2025-05,2025-06",
+    "afrr_price": "last interval 2026-10-20 21:45 UTC",
+    "offers": "last interval 2026-10-23 21:00 UTC"
+  },
+  "revenue_last12": {
+    "arbitrage_1h": {
+      "total": 206554.0,
+      "arbitrage": 220209.0,
+      "reserves": 0.0
+    },
+    "arbitrage_2h": {
+      "total": 378815.0,
+      "arbitrage": 405415.0,
+      "reserves": 0.0
+    },
+    "arbitrage_4h": {
+      "total": 630148.0,
+      "arbitrage": 677719.0,
+      "reserves": 0.0
+    },
+    "reserves_1h": {
+      "total": 2201931.0,
+      "arbitrage": 0.0,
+      "reserves": 2201931.0
+    },
+    "reserves_2h": {
+      "total": 3171714.0,
+      "arbitrage": 0.0,
+      "reserves": 3171714.0
+    },
+    "reserves_4h": {
+      "total": 3414606.0,
+      "arbitrage": 0.0,
+      "reserves": 3414606.0
+    },
+    "stacked_1h": {
+      "total": 2527533.0,
+      "arbitrage": 20855.0,
+      "reserves": 2512262.0
+    },
+    "stacked_2h": {
+      "total": 3298527.0,
+      "arbitrage": 27603.0,
+      "reserves": 3274582.0
+    },
+    "stacked_4h": {
+      "total": 3504218.0,
+      "arbitrage": 87353.0,
+      "reserves": 3433762.0
+    }
+  },
+  "revenue_2025": {
+    "arbitrage_1h": {
+      "total": 169048.0,
+      "arbitrage": 182628.0,
+      "reserves": 0.0
+    },
+    "arbitrage_2h": {
+      "total": 307838.0,
+      "arbitrage": 334581.0,
+      "reserves": 0.0
+    },
+    "arbitrage_4h": {
+      "total": 497973.0,
+      "arbitrage": 546837.0,
+      "reserves": 0.0
+    },
+    "reserves_1h": {
+      "total": 1819110.0,
+      "arbitrage": 0.0,
+      "reserves": 1819110.0
+    },
+    "reserves_2h": {
+      "total": 2597909.0,
+      "arbitrage": 0.0,
+      "reserves": 2597909.0
+    },
+    "reserves_4h": {
+      "total": 2810848.0,
+      "arbitrage": 0.0,
+      "reserves": 2810848.0
+    },
+    "stacked_1h": {
+      "total": 2045896.0,
+      "arbitrage": 9866.0,
+      "reserves": 2043248.0
+    },
+    "stacked_2h": {
+      "total": 2710486.0,
+      "arbitrage": 10560.0,
+      "reserves": 2703459.0
+    },
+    "stacked_4h": {
+      "total": 2865801.0,
+      "arbitrage": -24267.0,
+      "reserves": 2904213.0
+    }
+  },
+  "market_room_mw": {
+    "fcr_up": 192.0,
+    "fcr_down": 192.0,
+    "afrr_up": 452.0,
+    "afrr_down": 411.0,
+    "mfrr_up": 465.0,
+    "mfrr_down": 120.0,
+    "rr_up": 607.0
+  },
+  "fleet_total_pln_mw_year": {
+    "0": 3298527.0,
+    "250": 1997355.0,
+    "500": 1514047.0,
+    "1000": 1026246.0,
+    "2000": 661934.0,
+    "4000": 509681.0
+  },
+  "capacity_market_pln_mw_year": {
+    "2029": 162384.0,
+    "2030": 62266.0
+  }
+}

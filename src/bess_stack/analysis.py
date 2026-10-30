@@ -40,7 +40,7 @@ def load_data(cache_dir: Path, today: date, start: date = HISTORY_START, end: da
     end = end or today + timedelta(days=1)
     frames, status = {}, {}
     for name in series or SERIES:
-        frames[name], status[name] = load_series(name, start, end, cache_dir, today, offline=offline)
+        frames[name], status[name] = load_series(name, start, end, cache_dir, offline=offline)
         log.info("%s: %d rows, %s", name, len(frames[name]), status[name].text())
     return Data(frames, status, f"{today:%d %B %Y}".lstrip("0"))
 

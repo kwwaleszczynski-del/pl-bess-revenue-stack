@@ -1,8 +1,8 @@
 product,hours,match_share,mean_abs_diff
 fcr_up,8760,1.0,0.0
-fcr_down,8760,0.9999,0.0003
+fcr_down,8760,1.0,0.0
 afrr_up,8760,1.0,0.0
-afrr_down,8760,0.9999,0.001
+afrr_down,8760,1.0,0.0
 mfrr_up,8759,1.0,0.0
-mfrr_down,6747,0.9999,0.0089
+mfrr_down,6747,1.0,0.0
 rr_up,8659,0.924,1.955

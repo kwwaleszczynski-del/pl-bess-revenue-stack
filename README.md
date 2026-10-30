@@ -66,9 +66,12 @@ All inputs are public reports of the Polish transmission system operator PSE, re
 | `eb-rozl` | `eb_afrrg`, `eb_afrrd` | balancing energy from aFRR activated on the European aFRR platform, MWh per 15 min | 15 min, published from 11 July 2025 |
 | `crb-rozl` | `ceb_sr_afrrg_cost`, `ceb_sr_afrrd_cost` | average balancing energy price of aFRR activations up / down, PLN/MWh | 15 min, settlement data published with a delay |
 
-Suffix `_g` (góra) is upward, `_d` (dół) downward. RR is only bought upwards. `dtime_utc` is the **end** of each
-interval; the code converts it to the interval start. Requests use `$filter` on `business_date`, `$first=20000`
-and follow `nextLink`. Everything is cached as monthly Parquet files in `data/` (not part of the repository).
+Suffix `_g` (góra) is upward, `_d` (dół) downward. RR is only bought upwards. The data are read with
+[pse-opendata](https://pypi.org/project/pse-opendata/), which converts `dtime_utc` (the **end** of each interval) to
+the interval start and caches monthly Parquet files in `data/` (not part of the repository). Offers are requested
+one business day at a time in a single page: the keyset paging of the API skips repeated offers at page
+boundaries, so the monthly paged download used before lost 39 of 5,263,971 hourly offers (0.0007 %, 469 MW
+offered in total, in 21 of 29 months); the results below include them.
 
 ## Rules for batteries in the Polish reserve markets
 
@@ -338,8 +341,8 @@ the product falls to half and to a tenth:
 Together the upward products buy about 1.7 GW and the downward ones about 0.7 GW per hour. One battery MW can be
 sold upwards and downwards at the same time, so 0.7-1.7 GW of batteries could in principle take over all of it, but
 prices collapse long before: a few hundred MW halve every product. Cutting the published offer stacks at the MW
-bought reproduces the published clearing price within 0.01 PLN in at least 99.99% of hours for FCR, aFRR and mFRRd
-and in 92.4% for RR (RR demand is set together with the other reserves), so the stacks are a sound basis.
+bought reproduces the published clearing price within 0.01 PLN in every hour for FCR, aFRR and mFRRd and in
+92.4% for RR (RR demand is set together with the other reserves), so the stacks are a sound basis.
 
 ![saturation](docs/img/saturation.png)
 
@@ -461,7 +464,7 @@ pytest -q                                             # synthetic data, no netwo
 
 ```
 src/bess_stack/
-  pse_api.py          PSE API client with monthly Parquet cache
+  pse_api.py          PSE series through pse-opendata, data status
   optimizer.py        daily MILP: arbitrage + capacity in seven products with SoC reserve
   backtest.py         day-by-day runs in parallel processes, annualisation
   market.py           capacity prices, hour profiles, depth, correlation, trend

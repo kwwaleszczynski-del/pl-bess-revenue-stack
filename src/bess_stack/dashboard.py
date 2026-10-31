@@ -485,18 +485,35 @@ function render() {
     if (!el) continue;
     const fig = resolve(FIGS[id], t);
     const lay = Object.assign({}, fig.layout || {});
-    const left = lay.margin_l || 56;
+    let data = fig.data;
+    // phones: long bar names wrapped with a narrower left margin, long x titles split, x labels angled or thinned
+    const narrow = window.innerWidth < 640;
+    const left = narrow ? Math.min(lay.margin_l || 56, 120) : (lay.margin_l || 56);
     delete lay.margin_l;
+    if (narrow) {
+      const wrap = s => String(s).split(" ").reduce((ls, w) => {
+        const last = ls[ls.length - 1];
+        if (last && (last + " " + w).length <= 18) ls[ls.length - 1] = last + " " + w; else ls.push(w);
+        return ls;
+      }, []).join("<br>");
+      data = data.map(tr => tr.orientation === "h" ? Object.assign({}, tr, { y: tr.y.map(wrap) }) : tr);
+      const xt = lay.xaxis && lay.xaxis.title && lay.xaxis.title.text;
+      const categorical = data.length && Array.isArray(data[0].x) && typeof data[0].x[0] === "string";
+      lay.xaxis = Object.assign({}, lay.xaxis, categorical ? { tickangle: -90 } : { tickfont: { color: t.muted, size: 10 }, nticks: 5 },
+        xt ? { title: Object.assign({}, lay.xaxis.title, { text: xt.replace(" (", "<br>(") }) } : {});
+      if (data.some(tr => tr.orientation === "h")) lay.yaxis = Object.assign({}, lay.yaxis, { tickfont: { color: t.muted, size: 10 } });
+    }
     const xTitle = lay.xaxis && lay.xaxis.title;      // leave room for the x-axis title below the plot
     const layout = Object.assign({}, lay, {
       paper_bgcolor: t.surface, plot_bgcolor: t.surface,
       font: { family: 'system-ui, -apple-system, "Segoe UI", sans-serif', color: t.ink, size: 12 },
       margin: { l: left, r: 16, t: 8, b: xTitle ? 56 : 40 },
-      legend: { orientation: "h", y: xTitle ? -0.32 : -0.2, font: { color: t.ink2 } },
+      legend: narrow ? { orientation: "h", y: 1.02, yanchor: "bottom", font: { color: t.ink2 } }
+        : { orientation: "h", y: xTitle ? -0.32 : -0.2, font: { color: t.ink2 } },
       hoverlabel: { bgcolor: t.surface, bordercolor: t.axis, font: { color: t.ink } },
       xaxis: axis(t, lay.xaxis), yaxis: axis(t, lay.yaxis),
     });
-    Plotly.react(el, fig.data, layout, { responsive: true, displaylogo: false });
+    Plotly.react(el, data, layout, { responsive: true, displaylogo: false });
   }
 }
 render();

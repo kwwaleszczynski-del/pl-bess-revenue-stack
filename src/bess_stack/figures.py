@@ -105,13 +105,15 @@ def market_depth(r: Analysis, path: Path):
         ax.axhline(1.0, color=MUTED, linewidth=1)
         _month_axis(ax, (1, 7))
         ax.set_title(title, loc="left")
-        ax.legend(loc="upper left", ncols=2)
+        ax.legend(loc="lower center", ncols=2)  # every series is at or above 1, the band below is empty
         ax.set_ylim(0, 5)
         over = d[[("cover", k) for k in group]].max(axis=1)
         for xi, v in zip(x, over):
             if v > 5:
+                # on a background, so the line running out of the axes does not cross the value
                 ax.annotate(f"{v:.0f}x", (xi, 4.9), xytext=(6, 0), textcoords="offset points", ha="left", va="top",
-                            fontsize=8, color=INK2)
+                            fontsize=8, color=INK2, bbox=dict(facecolor=SURFACE, edgecolor="none", pad=1),
+                            zorder=5)
     axes[0].set_ylabel("MW offered / MW bought")
     fig.suptitle("Depth of the reserve markets: offered capacity relative to demand (monthly mean of hours)", x=0.01,
                  ha="left", fontweight="bold")
@@ -224,8 +226,7 @@ def saturation(r: Analysis, path: Path):
         labels = [f"{int(v):,}" for v in f.index]
         segs = [_segments(f.loc[v]) for v in f.index]
         _stacked_bars(ax, labels, segs, width=0.65)
-        ax.axhline(f["arbitrage_only"].iloc[0], color=INK, linewidth=1.5)
-        ax.text(-0.45, f["arbitrage_only"].iloc[0], "arbitrage only", va="bottom", ha="left", fontsize=8, color=INK)
+        ax.axhline(f["arbitrage_only"].iloc[0], color=INK, linewidth=1.5, label="Arbitrage only")
         ax.set_xlabel("fleet of identical 2 h batteries, MW")
         ax.set_ylabel("PLN per MW per year")
         ax.set_title("Stacking revenue per MW in a fleet", loc="left")

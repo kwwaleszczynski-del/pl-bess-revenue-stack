@@ -76,8 +76,15 @@ offered in total, in 21 of 29 months); the results below include them.
 ## Rules for batteries in the Polish reserve markets
 
 The balancing rules are the PSE *Warunki Dotyczące Bilansowania* (WDB, terms and conditions related to balancing
-under EU Regulation 2017/2195), approved by the energy regulator URE and amended several times a year. The points
-that matter for this model, as read on 22 October 2026 (**they change often; check the current text before reuse**):
+under EU Regulation 2017/2195), approved by the energy regulator URE and amended several times a year. In short,
+the model holds one hour of full power per MW of aFRR, mFRRd and RR (the WDB states no duration, so this is an
+assumption, with 15 minutes as a sensitivity) and 15 minutes for FCR (EU System Operation Guideline, 30 minutes as
+a sensitivity); batteries qualify separately per direction; offer price caps apply from 31 July 2026 and a
+competition test from 1 December 2026. Details and sources, as read on 22 October 2026 (**they change often; check
+the current text before reuse**):
+
+<details>
+<summary>WDB rules and EU requirements used by the model</summary>
 
 - **Activation times.** WDB Annex 2 (qualification of balancing service providers, in force since 14 June 2024),
   point 4(7.2): FCR is activated automatically from local frequency measurement with full activation time (FAT)
@@ -106,6 +113,8 @@ that matter for this model, as read on 22 October 2026 (**they change often; che
 - **Planned from 1 December 2026** (amendment 6/2026, sent to URE): connection to the European mFRR platform and
   daily (DLOM) and hourly (GLOM) limits in capacity offers, which let energy-limited providers express their
   daily energy budget directly.
+
+</details>
 
 ## Method
 
@@ -239,8 +248,10 @@ evening ramp and of the solar surplus.
 ![hour profile](docs/img/hour_profile.png)
 
 **Depth.** Over the last 12 months PSE bought on average 192 MW of FCR in each direction, 452 / 411 MW of aFRR
-up / down, 465 / 92 MW of mFRRd and 600 MW of RR per hour in the basic procurement (hours without demand counted as
-zero), plus 10-60 MW per product in the supplementary procurement. The offers cover aFRR only 1.34 times upwards and
+up / down, 465 / 120 MW of mFRRd and 607 MW of RR per hour with demand in the basic procurement (the basis of the key
+results and of section 4; mFRRd down is bought in 77% of hours and RR in 99%, so over all hours, the basis of the
+dashboard's depth table, they average 92 and 600 MW), plus 10-60 MW per product in the supplementary procurement
+(all hours). The offers cover aFRR only 1.34 times upwards and
 1.46 times downwards (FCR about 2, mFRRd up 1.6, RR 2.4): aFRR, the product that pays most, is the thinnest market.
 Offered aFRR up capacity grew from about 520 MW in mid-2024 to 540-740 MW in the months of 2026 and mFRRd up from
 about 420 MW to 600-890 MW, so new supply is arriving, but it has not pushed prices down yet.
@@ -385,8 +396,13 @@ batteries regardless of duration (for 2030 together with pumped storage), so the
 2 h and 4 h and halves per MWh with each doubling of duration. Next to the stacked revenue of a lone 2 h battery
 (3.30 M) the 2030 layer adds 2%; next to arbitrage alone (379k) 16%.
 
-Sources (read on 22 October 2026, **to be verified**, parameters change every auction): the ministerial
-regulations on auction parameters
+Sources: the auction parameter regulations and the URE announcements of results, read on 22 October 2026
+(**to be verified**, parameters change every auction).
+
+<details>
+<summary>Capacity market sources</summary>
+
+The ministerial regulations on auction parameters
 [Dz.U. 2020 poz. 1355](https://api.sejm.gov.pl/eli/acts/DU/2020/1355/text.pdf),
 [2021 poz. 1480](https://api.sejm.gov.pl/eli/acts/DU/2021/1480/text.pdf),
 [2022 poz. 1690](https://api.sejm.gov.pl/eli/acts/DU/2022/1690/text.pdf),
@@ -397,6 +413,7 @@ announcements of final results by the President of URE,
 [No. 02/2025](https://www.ure.gov.pl/download/9/15112/Ostateczneogloszeniewynikowaukcjiglownejna2029.pdf) (2029) and
 [No. 1/2026](https://www.ure.gov.pl/download/9/15928/InformacjaPrezesaUrzeduRegulacjiEnergetykiNr12026.pdf) (2030).
 
+</details>
 
 ## Limitations
 
@@ -426,17 +443,8 @@ Market rules change often and need to be checked against current sources.
 
 All market data are public reports of **PSE S.A.** (Polskie Sieci Elektroenergetyczne, the Polish transmission
 system operator), downloaded from the reports API `https://api.raporty.pse.pl/api` without a key (reports listed
-in [Data](#data)).
-
-**Terms of use.** PSE publishes conditions for re-using public sector information
-([www.pse.pl, BIP, "Ponowne wykorzystywanie informacji sektora publicznego"](https://www.pse.pl/bip/ponowne-wykorzystanie-informacji-publicznej),
-checked on 22 October 2026; the entry was last changed on 14 October 2026).
-They allow commercial and non-commercial re-use of information published on www.pse.pl free of charge, on
-condition that the user names the source and the date the information was obtained, removes the PSE logo, and,
-when the information has been processed, tells recipients that it was changed and how, without misleading them.
-PSE accepts no liability for processed information and notes that some materials may be protected by copyright or
-database rights. These conditions are written for www.pse.pl; this project applies them to the reports API of the
-same operator. Attribution as required:
+in [Data](#data)). They are used under the PSE conditions for re-using public sector information, with this
+attribution:
 
 > Information obtained from www.pse.pl (PSE S.A. reports `rce-pln`, `csdac-pln`, `cmbp-tp`, `mbp-tp`, `cmbu-tu`,
 > `mbu-tu`, `popmb-rmb`, `eb-rozl`, `crb-rozl`), state as of 22 October 2026. The information has been processed
@@ -445,9 +453,24 @@ same operator. Attribution as required:
 
 The repository contains no raw PSE data, only derived statistics in `results/` and `docs/`.
 
+<details>
+<summary>Terms of use in full</summary>
+
+PSE publishes conditions for re-using public sector information
+([www.pse.pl, BIP, "Ponowne wykorzystywanie informacji sektora publicznego"](https://www.pse.pl/bip/ponowne-wykorzystanie-informacji-publicznej),
+checked on 22 October 2026; the entry was last changed on 14 October 2026).
+They allow commercial and non-commercial re-use of information published on www.pse.pl free of charge, on
+condition that the user names the source and the date the information was obtained, removes the PSE logo, and,
+when the information has been processed, tells recipients that it was changed and how, without misleading them.
+PSE accepts no liability for processed information and notes that some materials may be protected by copyright or
+database rights. These conditions are written for www.pse.pl; this project applies them to the reports API of the
+same operator.
+
 Legal and regulatory sources quoted above (the WDB and its explanatory notes by PSE, the capacity auction
 parameter regulations in Dziennik Ustaw, the URE announcements of auction results, the ACER decision) are cited,
 not redistributed.
+
+</details>
 
 ## Usage
 
